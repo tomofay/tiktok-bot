@@ -12,7 +12,7 @@ console = Console()
 class TikTokBot:
     def __init__(self):
         self.xpaths = {
-            "likes": "/html/body/div[6]/div/div[2]/div[1]/div/div[3]/div/button",  
+            "likes": "/html/body/div[6]/div/div[2]/div/div/div[3]/div/button",  
             "video_url_box": "/html/body/div[8]/div/form/div/input",
             "search_box": "/html/body/div[8]/div/form/div/div/button",
             "submit_button": '//*[@id="c2VuZE9nb2xsb3dlcnNfdGlrdG9r"]/div[1]/div/form/button',
@@ -45,17 +45,16 @@ class TikTokBot:
         self.driver.get(url)
         time.sleep(5)
 
-    def wait_for_xpath(self, xpath, retries=3, delay=2):
-        for _ in range(retries):
+    def wait_for_xpath(self, xpath, delay=2):
+        while True:
             try:
                 WebDriverWait(self.driver, delay).until(
                     EC.presence_of_element_located((By.XPATH, xpath))
                 )
                 return True
             except:
-                console.print(f"[red]Elemen {xpath} tidak ditemukan, mencoba lagi...[/]")
                 time.sleep(delay)
-        return False
+
 
     def wait_for_cooldown(self):
         try:

@@ -45,17 +45,15 @@ class TikTokBot:
         self.driver.get(url)
         time.sleep(5)
 
-    def wait_for_xpath(self, xpath, retries=3, delay=2):
-        for _ in range(retries):
+    def wait_for_xpath(self, xpath, delay=2):
+        while True:
             try:
                 WebDriverWait(self.driver, delay).until(
                     EC.presence_of_element_located((By.XPATH, xpath))
                 )
                 return True
             except:
-                console.print(f"[red]Elemen {xpath} tidak ditemukan, mencoba lagi...[/]")
                 time.sleep(delay)
-        return False
 
     def wait_for_cooldown(self):
         try:
